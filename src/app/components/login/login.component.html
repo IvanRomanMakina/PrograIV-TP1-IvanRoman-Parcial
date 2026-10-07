@@ -1,0 +1,32 @@
+<div class="login-container">
+  <h2>Cine Prisma - Iniciar Sesión</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <label>Correo Electrónico:</label>
+      type="email" formControlName="email" placeholder="correo@ejemplo.com">
+      <span class="error-msg" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        Ingresa un correo válido.
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña:</label>
+      <input type="password" formControlName="password" placeholder="••••••••">
+      <span class="error-msg" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        La contraseña debe tener al menos 6 caracteres.
+      </span>
+    </div>
+
+    <span class="error-msg" *ngIf="errorMessage" style="text-align: center; margin-bottom: 15px;">
+      {{ errorMessage }}
+    </span>
+
+    <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">Ingresar</button>
+  </form>
+
+  <div class="links-footer">
+    <p>¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
+    <p><a routerLink="/">Volver al Home</a></p>
+  </div>
+</div>

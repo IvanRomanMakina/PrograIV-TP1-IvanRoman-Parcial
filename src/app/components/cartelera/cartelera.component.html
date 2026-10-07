@@ -1,0 +1,18 @@
+<div class="cartelera-container">
+  <h2>Cine Prisma - Cartelera Actual</h2>
+  <p>Selecciona una función para elegir tus asientos.</p>
+
+  <p *ngIf="cargando">Cargando películas...</p>
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+
+  <div class="peliculas-grid" *ngIf="!cargando">
+    <div class="pelicula-card" *ngFor="let p of peliculas">
+      <div>
+        <h3>{{ p.titulo }}</h3>
+        <p><strong>Género:</strong> {{ p.genero }}</p>
+        <p><strong>Duración:</strong> {{ p.duracion }}</p>
+      </div>
+      <button (click)="seleccionarPelicula(p.id)">Ver Asientos / Comprar</button>
+    </div>
+  </div>
+</div>

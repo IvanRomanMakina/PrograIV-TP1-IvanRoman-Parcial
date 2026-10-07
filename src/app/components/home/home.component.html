@@ -1,0 +1,28 @@
+<div class="home-container">
+  <header class="navbar">
+    <div class="logo">🎬 Cine Prisma</div>
+    <div class="nav-links">
+      <a routerLink="/login">Login</a>
+      <a routerLink="/registro">Registro</a>
+      <a routerLink="/reportes" style="background: #0284c7;">Reportes</a>
+    </div>
+  </header>
+
+  <h2>Cartelera Actual</h2>
+  <br>
+
+  <div class="cartelera-grid">
+    <div class="pelicula-card" *ngFor="let p of peliculas">
+      <!-- Imagen de portada limpia y directa -->
+      <img [src]="p.imagen" [alt]="p.titulo" class="pelicula-img">
+      
+      <div class="pelicula-info">
+        <div>
+          <h3>{{ p.titulo }}</h3>
+          <p>{{ p.genero }}</p>
+        </div>
+        <a [routerLink]="['/asientos', p.id]" class="btn-asientos">Elegir Asientos</a>
+      </div>
+    </div>
+  </div>
+</div>

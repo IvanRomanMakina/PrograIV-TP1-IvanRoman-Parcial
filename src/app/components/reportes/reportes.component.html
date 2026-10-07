@@ -1,0 +1,46 @@
+<div class="reportes-container">
+  <div class="header-reportes">
+    <h2>Panel de Reportes y Estadísticas</h2>
+    <a routerLink="/" class="btn-volver">Volver al Home</a>
+  </div>
+
+  <!-- Tarjetas de Métricas -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <h3>Usuarios Registrados</h3>
+      <p>{{ totalUsuarios }}</p>
+    </div>
+    <div class="metric-card">
+      <h3>Asientos Reservados</h3>
+      <p>{{ totalReservas }}</p>
+    </div>
+  </div>
+
+  <!-- Listado con los campos extendidos solicitados por la cátedra -->
+  <div class="tabla-container">
+    <h3>Perfiles de Usuarios (Datos Extendidos)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Tipo Sangre</th>
+          <th>Ojos</th>
+          <th>Vacaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of usuarios">
+          <td>{{ u.nombre || u.full_name || 'N/A' }}</td>
+          <td>{{ u.email || 'N/A' }}</td>
+          <td>{{ u.tipo_sangre || 'N/A' }}</td>
+          <td>{{ u.color_ojos || 'N/A' }}</td>
+          <td>{{ u.dias_vacaciones || '0' }} días</td>
+        </tr>
+        <tr *ngIf="usuarios.length === 0">
+          <td colspan="5" style="text-align: center; color: #94a3b8;">No hay registros disponibles.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

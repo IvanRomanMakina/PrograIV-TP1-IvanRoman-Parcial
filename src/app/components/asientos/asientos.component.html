@@ -1,0 +1,37 @@
+<div class="asientos-container">
+  <h2>Selección de Asientos</h2>
+  <p>Función de la Película ID: <strong>{{ idPelicula }}</strong></p>
+
+  <div class="pantalla">PANTALLA</div>
+
+  <!-- Leyenda de colores -->
+  <div class="leyenda">
+    <div class="item-leyenda">
+      <div class="color-box" style="background: #1e293b; border: 1px solid #334155;"></div> Disponible
+    </div>
+    <div class="item-leyenda">
+      <div class="color-box" style="background: #16a34a;"></div> Seleccionado
+    </div>
+    <div class="item-leyenda">
+      <div class="color-box" style="background: #ef4444;"></div> Ocupado
+    </div>
+  </div>
+
+  <!-- Grilla de butacas -->
+  <div class="sala-grid">
+    <button 
+      *ngFor="let a of asientos" 
+      class="asiento" 
+      [ngClass]="{
+        'ocupado': a.estado === 'ocupado',
+        'seleccionado': a.seleccionado
+      }"
+      (click)="toggleAsiento(a)">
+      {{ a.numero }}
+    </button>
+  </div>
+
+  <button class="btn-confirmar" [disabled]="!haySeleccionados || cargando" (click)="confirmarReserva()">
+    {{ cargando ? 'Procesando...' : 'Confirmar Reserva' }}
+  </button>
+</div>
