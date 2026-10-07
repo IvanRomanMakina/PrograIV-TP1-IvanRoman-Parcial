@@ -3,42 +3,39 @@
 
   <button class="btn-volver" routerLink="/">Volver al Home</button>
 
-  <div class="stats-grid">
+  <div class="stats-container">
     <div class="card">
       <h3>USUARIOS REGISTRADOS</h3>
-      <p>{{ totalUsuarios }}</p>
+      <p>{{ totalUsuarios || 0 }}</p>
     </div>
     <div class="card">
       <h3>ASIENTOS RESERVADOS</h3>
-      <p>{{ totalAsientos }}</p>
+      <p>{{ totalAsientos || 0 }}</p>
     </div>
   </div>
 
   <div class="table-section">
-    <h3>Listado de Reservas</h3>
-    <table class="tabla-reportes">
+    <h3>Perfiles de Usuarios (Datos Extendidos)</h3>
+    <table>
       <thead>
         <tr>
-          <th>Usuario / Correo</th>
-          <th>Película</th>
-          <th>Asientos</th>
-          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Tipo Sangre</th>
+          <th>Ojos</th>
+          <th>Vacaciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let reserva of listaReservas">
-          <td>{{ reserva.correo }}</td>
-          <td>{{ reserva.pelicula_id }}</td>
-          <td>{{ reserva.asientos }}</td>
-          <td>{{ reserva.fecha | date:'short' }}</td>
+        <tr *ngIf="!listaUsuarios || listaUsuarios.length === 0">
+          <td colspan="5" style="text-align: center;">No hay registros disponibles.</td>
         </tr>
-        <tr *ngIf="listaReservas.length === 0">
-          <td colspan="4" class="no-records">No hay registros disponibles.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+        <tr *ngFor="let usuario of listaUsuarios">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.tipoSangre }}</td>
+          <td>{{ usuario.ojos }}</td>
+          <td>{{ usuario.vacaciones }}</td>
         </tr>
       </tbody>
     </table>
