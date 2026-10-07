@@ -41,7 +41,6 @@ export class AsientosComponent implements OnInit {
   }
 
   async cargarAsientosDeSala() {
-    // Generamos una matriz base de 24 asientos para la función
     const listaTemporal = [];
     for (let i = 1; i <= 24; i++) {
       listaTemporal.push({
@@ -67,27 +66,40 @@ export class AsientosComponent implements OnInit {
     if (!this.haySeleccionados) return;
 
     this.cargando = true;
-    const asientosSeleccionados = this.asientos
-      .filter(a => a.seleccionado)
-      .map(a => a.numero);
 
     try {
-      // Opcional: Registrar la reserva en una tabla de Supabase llamada 'reservas'
+      // 1. Verificamos si hay un usuario autenticado en la sesión actual
+      const { data: { user }, error: userError } = await this.supabaseService.client.auth.getUser();
+
+      if (userError || !user) {
+        alert('Debes iniciar sesión para poder confirmar la reserva de tus asientos.');
+        this.router.navigate(['/login']);
+        return;
+      }
+
+      const asientosSeleccionados = this.asientos
+        .filter(a => a.seleccionado)
+        .map(a => a.numero);
+
+      // 2. Guardamos la reserva vinculando el ID del usuario autenticado
       const { error } = await this.supabaseService.client
         .from('reservas')
         .insert([
-          { pelicula_id: this.idPelicula, asientos: asientosSeleccionados, fecha: new Date() }
+          { 
+            user_id: user.id, 
+            pelicula_id: this.idPelicula, 
+            asientos: asientosSeleccionados, 
+            fecha: new Date() 
+          }
         ]);
 
-      // Si no tienes creada la tabla 'reservas' todavía en Supabase, puedes comentar el bloque de arriba 
-      // y dejar solo la redirección para no bloquear la práctica.
+      if (error) throw error;
 
       alert(`¡Reserva confirmada con éxito para los asientos: ${asientosSeleccionados.join(', ')}!`);
       this.router.navigate(['/reportes']);
     } catch (error: any) {
       console.error('Error al guardar reserva:', error);
-      alert('¡Asientos guardados localmente con éxito!');
-      this.router.navigate(['/reportes']);
+      alert('Hubo un error al registrar la reserva en la base de datos.');
     } finally {
       this.cargando = false;
     }
