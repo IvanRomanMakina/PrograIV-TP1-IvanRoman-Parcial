@@ -1,44 +1,44 @@
 <div class="reportes-container">
-  <div class="header-reportes">
-    <h2>Panel de Reportes y Estadísticas</h2>
-    <a routerLink="/" class="btn-volver">Volver al Home</a>
-  </div>
+  <h2>Panel de Reportes y Estadísticas</h2>
 
-  <!-- Tarjetas de Métricas -->
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <h3>Usuarios Registrados</h3>
+  <button class="btn-volver" routerLink="/">Volver al Home</button>
+
+  <div class="stats-grid">
+    <div class="card">
+      <h3>USUARIOS REGISTRADOS</h3>
       <p>{{ totalUsuarios }}</p>
     </div>
-    <div class="metric-card">
-      <h3>Asientos Reservados</h3>
-      <p>{{ totalReservas }}</p>
+    <div class="card">
+      <h3>ASIENTOS RESERVADOS</h3>
+      <p>{{ totalAsientos }}</p>
     </div>
   </div>
 
-  <!-- Listado con los campos extendidos solicitados por la cátedra -->
-  <div class="tabla-container">
-    <h3>Perfiles de Usuarios (Datos Extendidos)</h3>
-    <table>
+  <div class="table-section">
+    <h3>Listado de Reservas</h3>
+    <table class="tabla-reportes">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Correo</th>
-          <th>Tipo Sangre</th>
-          <th>Ojos</th>
-          <th>Vacaciones</th>
+          <th>Usuario / Correo</th>
+          <th>Película</th>
+          <th>Asientos</th>
+          <th>Fecha</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let u of usuarios">
-          <td>{{ u.nombre || u.full_name || 'N/A' }}</td>
-          <td>{{ u.email || 'N/A' }}</td>
-          <td>{{ u.tipo_sangre || 'N/A' }}</td>
-          <td>{{ u.color_ojos || 'N/A' }}</td>
-          <td>{{ u.dias_vacaciones || '0' }} días</td>
+        <tr *ngFor="let reserva of listaReservas">
+          <td>{{ reserva.correo }}</td>
+          <td>{{ reserva.pelicula_id }}</td>
+          <td>{{ reserva.asientos }}</td>
+          <td>{{ reserva.fecha | date:'short' }}</td>
         </tr>
-        <tr *ngIf="usuarios.length === 0">
-          <td colspan="5" style="text-align: center; color: #94a3b8;">No hay registros disponibles.</td>
+        <tr *ngIf="listaReservas.length === 0">
+          <td colspan="4" class="no-records">No hay registros disponibles.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
         </tr>
       </tbody>
     </table>
